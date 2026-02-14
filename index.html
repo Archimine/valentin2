@@ -12,58 +12,28 @@
 
 body {
     margin: 0;
-    padding: 20px; /* margen lateral real */
     font-family: 'Segoe UI', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    overflow-x: hidden; /* solo ocultamos horizontal */
+    overflow-x: hidden;
 }
 
-/* Corazones */
-.heart {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: red;
-    transform: rotate(45deg);
-    animation: float 6s infinite ease-in;
-    opacity: 0.6;
-    z-index: 0;
-}
-
-.heart::before,
-.heart::after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: red;
-    border-radius: 50%;
-}
-
-.heart::before { top: -10px; left: 0; }
-.heart::after { left: -10px; top: 0; }
-
-@keyframes float {
-    0% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
-    50% { opacity: 0.7; }
-    100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
-}
-
-/* Contenedor */
-.card-container {
-    perspective: 1500px;
-    width: 100%;
-    max-width: 320px; /* más pequeño en móvil */
-    display: flex;
-    justify-content: center;
+/* CENTRADO PERFECTO */
+.wrapper {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    position: relative;
     z-index: 1;
 }
 
-/* Tarjeta */
+/* TARJETA */
+.card-container {
+    width: 100%;
+    max-width: 300px;
+    perspective: 1500px;
+}
+
 .card {
     width: 100%;
     aspect-ratio: 3 / 4;
@@ -81,12 +51,12 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden;
     border-radius: 20px;
+    backface-visibility: hidden;
     box-shadow: 0 15px 35px rgba(0,0,0,0.25);
 }
 
-/* Frente */
+/* FRENTE */
 .front {
     background: #ff4b6e;
     display: flex;
@@ -99,7 +69,7 @@ body {
     padding: 20px;
 }
 
-/* Interior */
+/* INTERIOR */
 .back {
     background: white;
     transform: rotateY(180deg);
@@ -114,17 +84,15 @@ body {
     margin-bottom: 10px;
 }
 
-/* Imágenes */
 .images {
     display: flex;
     justify-content: center;
     gap: 10px;
-    flex-wrap: wrap;
+    margin-top: 10px;
 }
 
 .images img {
     width: 45%;
-    max-width: 120px;
     border-radius: 12px;
     box-shadow: 0 8px 18px rgba(0,0,0,0.2);
     transition: transform 0.3s;
@@ -135,52 +103,92 @@ body {
 }
 
 .message {
-    margin-top: 15px;
+    margin-top: 12px;
     font-size: 13px;
-    color: #444;
     line-height: 1.4;
+    color: #444;
+}
+
+/* CORAZONES FONDO */
+.background-hearts {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.heart {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: red;
+    transform: rotate(45deg);
+    animation: float 6s infinite ease-in;
+    opacity: 0.6;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: red;
+    border-radius: 50%;
+}
+
+.heart::before { top: -7px; left: 0; }
+.heart::after { left: -7px; top: 0; }
+
+@keyframes float {
+    0% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
+    50% { opacity: 0.7; }
+    100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
 }
 </style>
-
 </head>
 
 <body>
 
-<!-- Corazones animados -->
+<div class="background-hearts"></div>
+
+<div class="wrapper">
+    <div class="card-container">
+        <div class="card" onclick="this.classList.toggle('open')">
+            
+            <div class="card-face front">
+                💌 Haz clic para abrir 💌
+            </div>
+            
+            <div class="card-face back">
+                <h2>Feliz San Valentín ❤️</h2>
+
+                <div class="images">
+                    <!-- CAMBIA AQUÍ TUS IMÁGENES -->
+                    <img src="https://i.pinimg.com/736x/ed/5c/38/ed5c38fbbf88a8668b92aa3316ad5866.jpg" alt="Imagen 1">
+                    <img src="https://i.pinimg.com/originals/78/cc/f6/78ccf6b1971f3fcdd337a87c240f1b2d.jpg" alt="Imagen 2">
+                </div>
+
+                <div class="message">
+                    Mi princesa, lo que siento por ti es inmenso, es algo tan hermoso, tan fuerte, que me reafirma que quiero pasar mi vida contigo. En ti he encontrado amor, cariño, compañía, propósito, y vida. Eres la luz que ilumina cada día mío, ver tus mensajes, tu palabras hermosas, me alegran la existencia, y verte y poder besarte cada semana hace que este amor que tengo por ti crezca más y más. Es nuestro tercer San Valentín juntos, un día muy bello que volveremos a pasar juntitos, y vendrán muchos más. Te amo demasiado, y quiero un futuro a tu lado. ¡TE AMOOOOOOOOOOOOOOOOOOOOOOO!
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script>
+const container = document.querySelector(".background-hearts");
+
 for(let i = 0; i < 20; i++){
     let heart = document.createElement("div");
     heart.className = "heart";
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-    heart.style.width = heart.style.height = (Math.random() * 15 + 10) + "px";
-    document.body.appendChild(heart);
+    container.appendChild(heart);
 }
 </script>
-
-<div class="card-container">
-    <div class="card" onclick="this.classList.toggle('open')">
-        
-        <div class="card-face front">
-            💌 Haz clic para abrir 💌
-        </div>
-        
-        <div class="card-face back">
-            <h2>Feliz San Valentín ❤️</h2>
-
-            <div class="images">
-                <!-- CAMBIA ESTAS IMÁGENES -->
-                <img src="https://i.pinimg.com/736x/ed/5c/38/ed5c38fbbf88a8668b92aa3316ad5866.jpg" alt="Imagen 1">
-                <img src="https://i.pinimg.com/originals/78/cc/f6/78ccf6b1971f3fcdd337a87c240f1b2d.jpg" alt="Imagen 2">
-            </div>
-
-            <div class="message">
-                Mi princesa, lo que siento por ti es inmenso, es algo tan hermoso, tan fuerte, que me reafirma que quiero pasar mi vida contigo. En ti he encontrado amor, cariño, compañía, propósito, y vida. Eres la luz que ilumina cada día mío, ver tus mensajes, tu palabras hermosas, me alegran la existencia, y verte y poder besarte cada semana hace que este amor que tengo por ti crezca más y más. Es nuestro tercer San Valentín juntos, un día muy bello que volveremos a pasar juntitos, y vendrán muchos más. Te amo demasiado, y quiero un futuro a tu lado. ¡TE AMOOOOOOOOOOOOOOOOOOOOOOO!
-            </div>
-        </div>
-
-    </div>
-</div>
 
 </body>
 </html>
