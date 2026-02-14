@@ -9,7 +9,7 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,7 +17,7 @@ body {
     overflow: hidden;
 }
 
-/* Corazones de fondo */
+/* Corazones */
 .heart {
     position: absolute;
     width: 20px;
@@ -38,15 +38,8 @@ body {
     border-radius: 50%;
 }
 
-.heart::before {
-    top: -10px;
-    left: 0;
-}
-
-.heart::after {
-    left: -10px;
-    top: 0;
-}
+.heart::before { top: -10px; left: 0; }
+.heart::after { left: -10px; top: 0; }
 
 @keyframes float {
     0% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
@@ -54,14 +47,17 @@ body {
     100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
 }
 
-/* Tarjeta */
+/* Contenedor */
 .card-container {
     perspective: 1500px;
+    width: 90vw;
+    max-width: 350px;
 }
 
+/* Tarjeta adaptable */
 .card {
-    width: 350px;
-    height: 450px;
+    width: 100%;
+    aspect-ratio: 3/4; /* mantiene proporción */
     position: relative;
     transform-style: preserve-3d;
     transition: transform 1s;
@@ -81,38 +77,45 @@ body {
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
-/* Parte frontal */
+/* Frente */
 .front {
     background: #ff4b6e;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: bold;
+    text-align: center;
+    padding: 20px;
 }
 
-/* Parte interna */
+/* Interior */
 .back {
     background: white;
     transform: rotateY(180deg);
-    padding: 20px;
+    padding: 15px;
     text-align: center;
     overflow-y: auto;
 }
 
 .back h2 {
     color: #ff4b6e;
+    font-size: 20px;
+    margin-bottom: 10px;
 }
 
+/* Imágenes responsivas */
 .images {
     display: flex;
-    justify-content: space-around;
-    margin-top: 15px;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .images img {
-    width: 130px;
+    width: 40%;
+    max-width: 130px;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     transition: transform 0.3s;
@@ -123,11 +126,23 @@ body {
 }
 
 .message {
-    margin-top: 20px;
-    font-size: 16px;
+    margin-top: 15px;
+    font-size: 14px;
     color: #444;
 }
+
+/* Ajustes extra para pantallas muy pequeñas */
+@media (max-width: 400px) {
+    .front {
+        font-size: 18px;
+    }
+
+    .message {
+        font-size: 13px;
+    }
+}
 </style>
+
 </head>
 
 <body>
